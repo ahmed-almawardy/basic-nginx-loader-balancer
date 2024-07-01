@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  fast1:
+    build: .
+    container_name: cn_fastBack1
+    networks:
+      nginx_net:
+    hostname: fastapi1
+
+  fast2:
+    build: .
+    container_name: cn_fastBack2
+    networks:
+      nginx_net:
+    hostname: fastapi2
+
+  fast3:
+    build: .
+    container_name: cn_fastBack3
+    networks:
+      nginx_net:
+    hostname: fastapiusers
+
+  nginx:
+    depends_on:
+      - fast1
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:8080"
+    hostname: ng1
+    networks:
+      nginx_net:
+
+networks:
+  nginx_net:
